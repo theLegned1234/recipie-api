@@ -41,7 +41,7 @@ class CommandTest(SimpleTestCase):
         
         # here we are making sure that the database is called correctly from the check object
         # default is the one inside the settings.py which has it as a default
-        patched_check.assert_called_once_with(database=["default"])
+        patched_check.assert_called_once_with(databases=["default"])
         
         # here we going to delay the application from starting until the database start 
      
@@ -57,7 +57,7 @@ class CommandTest(SimpleTestCase):
         # so the second one is haven't setup a the database connection right [Psycop2Error]
         # it return true if return the 6 times 
         patch_checked.side_effect = [Psycop2Error] * 2 \
-                [OperationalError] * 3 + [True]
+            [OperationalError] * 3 + [True]
                 
         call_command('wait_for_db')
         
@@ -66,4 +66,4 @@ class CommandTest(SimpleTestCase):
         
         # we said it called database with to call it multiple times because we using side_effect 6 times 
         #   if we need it once that it will be called_once_with
-        patch_checked.assert_called_with(database=["default"])
+        patch_checked.assert_called_with(databases=["default"])
